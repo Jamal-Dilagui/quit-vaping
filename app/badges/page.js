@@ -1,6 +1,6 @@
 import React from 'react'
 
-const badges = () => {
+export default function badges() {
   return (
     //  <!-- Achievements Unlocked Section -->
       <section className="px-4 mt-6 mb-6">
@@ -68,5 +68,3 @@ const badges = () => {
       </section>
   )
 }
-
-export default badges

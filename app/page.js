@@ -1,9 +1,11 @@
 import Image from "next/image";
+import SetGoal from './_components/SetGoal';
 
 
 export default function Home() {
   return (
      <div>
+      <SetGoal />
       {/* <!-- Header --> */}
       <header className="flex items-center justify-between px-4 pt-6 pb-2">
         <div className="text-left">

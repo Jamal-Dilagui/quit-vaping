@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-const profile = () => {
+export default function profile() {
   return (
     <main className="w-full max-w-sm mx-auto px-4 py-8">
         <div className="flex flex-col items-center mb-8">
@@ -33,5 +33,3 @@ const profile = () => {
     </main>
   )
 }
-
-export default profile

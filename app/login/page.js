@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Login = () => {
+export default function Login() {
   return (
     <main className="w-full max-w-sm mx-auto px-4 py-8">
       {/* App Logo/Name */}
@@ -47,4 +47,3 @@ const Login = () => {
   )
 }
 
-export default Login

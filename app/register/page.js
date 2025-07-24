@@ -1,8 +1,9 @@
 import React from 'react'
 
-const Register = () => {
-  return (
-    <main className="w-full max-w-sm mx-auto px-4 py-8">
+
+export default function Register() {
+  return(
+     <main className="w-full max-w-sm mx-auto px-4 py-8">
       <div className="flex flex-col items-center mb-8">
         <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-400 to-blue-400 flex items-center justify-center mb-2 shadow-lg">
           <span className="text-white text-2xl font-bold">QV</span>
@@ -64,5 +65,3 @@ const Register = () => {
     </main>
   )
 }
-
-export default Register
