@@ -29,7 +29,6 @@ const userSchema = new mongoose.Schema(
         type: Number, 
         default: 200 
     }, // Customizable goal
-    quitDate: Date,
     currentStreak: { 
         type: Number, 
         default: 0 
