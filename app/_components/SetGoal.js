@@ -1,10 +1,12 @@
 'use client'
 import React, { useState, useRef, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 
 const SetGoal = () => {
+  const { data: session } = useSession();
   const [goal, setGoal] = useState('');
-  const [submittedGoal, setSubmittedGoal] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const modalRef = useRef(null);
 
   // Close modal on outside click
@@ -39,12 +41,37 @@ const SetGoal = () => {
     };
   }, [showModal]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmittedGoal(goal);
-    setGoal('');
-    setShowModal(false);
+    setLoading(true);
+    
+    try {
+      const res = await fetch('/api/goal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'daily',
+          targetPuffs: parseInt(goal)
+        })
+      });
+      
+      if (res.ok) {
+        setGoal('');
+        setShowModal(false);
+        // Optionally refresh the page or update parent components
+        window.location.reload();
+      } else {
+        const error = await res.json();
+        alert(error.error || 'Failed to set goal');
+      }
+    } catch (error) {
+      alert('Error setting goal');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (!session) return null;
 
   return (
     <>
@@ -69,42 +96,35 @@ const SetGoal = () => {
             >
               ×
             </button>
-            <h2 className="text-lg font-semibold text-purple-700 mb-4">Set Your Goal</h2>
+            <h2 className="text-lg font-semibold text-purple-700 mb-4">Set Your Daily Goal</h2>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-              <input
-                type="text"
-                value={goal}
-                onChange={(e) => setGoal(e.target.value)}
-                placeholder="Enter your goal..."
-                required
-                className="flex-1 px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-                autoFocus
-              />
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Daily Puff Limit
+                </label>
+                <input
+                  type="number"
+                  value={goal}
+                  onChange={(e) => setGoal(e.target.value)}
+                  placeholder="Enter your daily limit..."
+                  required
+                  min="1"
+                  className="flex-1 px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                  autoFocus
+                />
+              </div>
               <button
                 type="submit"
-                className="px-4 py-2 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700 transition-all focus:outline-none focus:ring-2 focus:ring-purple-400"
+                disabled={loading}
+                className="px-4 py-2 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700 transition-all focus:outline-none focus:ring-2 focus:ring-purple-400 disabled:opacity-50"
               >
-                Save
+                {loading ? 'Setting...' : 'Set Goal'}
               </button>
             </form>
           </div>
         </div>
       )}
 
-      {/* Show current goal if set */}
-      {submittedGoal && (
-        <div className="fixed bottom-35 right-6 z-40 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-4 py-2 rounded-lg shadow flex items-center gap-2 animate-fade-in">
-          <span className="font-semibold">Your Goal:</span>
-          <span>{submittedGoal}</span>
-          <button
-            className="ml-2 px-2 py-1 text-xs bg-slate-200 dark:bg-slate-700 rounded hover:bg-slate-300 dark:hover:bg-slate-600 transition-all"
-            onClick={() => setShowModal(true)}
-            aria-label="Edit goal"
-          >
-            Edit
-          </button>
-        </div>
-      )}
       <style jsx>{`
         .animate-fade-in {
           animation: fadeIn 0.3s ease;

@@ -160,7 +160,7 @@ export default function Login() {
         </button>
       </form>
 
-      <div className="flex items-center my-6">
+      {/* <div className="flex items-center my-6">
         <div className="flex-1 h-px bg-slate-200"></div>
         <span className="mx-3 text-xs text-slate-400">or continue with</span>
         <div className="flex-1 h-px bg-slate-200"></div>
@@ -185,9 +185,9 @@ export default function Login() {
         >
           <span className="text-slate-400">A</span>
         </button>
-      </div>
+      </div> */}
 
-      <div className="text-center text-sm text-slate-500">
+      <div className="text-center text-sm text-slate-500 my-6">
         Don't have an account?{' '}
         <Link href="/register" className="text-blue-500 font-semibold hover:underline">Sign up</Link>
       </div>
