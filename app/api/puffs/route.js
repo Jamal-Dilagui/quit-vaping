@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import PuffLog from "@/app/models/puffLog";
 import Badge from "@/app/models/badge";
 import { connectMongoDb } from "@/app/lib/mongodb";
