@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route.js";
+import { authOptions } from "@/app/api/auth/[...nextauth]";
 import Badge from "@/app/models/badge";
 import { connectMongoDb } from "@/app/lib/mongodb";
 
